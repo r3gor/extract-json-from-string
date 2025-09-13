@@ -38,6 +38,36 @@ let objects = window.extractJson('Expected { foo: "bar" } to equal { foo: "baz" 
 // ]
 ```
 
+### With Position Information
+
+To get the position information along with the extracted objects, pass `true` as the second parameter:
+
+```js
+const extract = require('extract-json-from-string');
+
+let detailed = extract('Expected { foo: "bar" } to equal { foo: "baz" }', true);
+// [
+//   {
+//     object: { foo: 'bar' },
+//     raw: '{ foo: "bar" }',
+//     start: 9,
+//     end: 23
+//   },
+//   {
+//     object: { foo: 'baz' },
+//     raw: '{ foo: "baz" }',
+//     start: 33,
+//     end: 47
+//   }
+// ]
+```
+
+Each result object contains:
+- `object`: The parsed JSON/javascript object
+- `raw`: The original string that was extracted  
+- `start`: Starting position in the original string
+- `end`: Ending position in the original string
+
 ## N.B.
 
 For the time being, I've written a very naive implementation. There are lots of ways to break this (like stringified JSON or escaped quotes within the value of a property). Please report any issues, and I'll do my best to fix them and make it _less_ naive.
